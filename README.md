@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="NetManCat/splash_logo.png" alt="NetManCat logo" width="180" />
+<img src="splash_logo.png" alt="NetManCat logo" width="180" />
 
 # NetManCat
 ### Il monitor di rete real-time per Windows che ti dice la verità
