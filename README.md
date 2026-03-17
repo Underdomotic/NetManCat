@@ -95,7 +95,7 @@ Distribuito come **singolo EXE firmato digitalmente** — nessuna installazione,
 
 | Versione | Data | Dimensione | Note |
 |----------|------|------------|------|
-| [v1.0.0](https://github.com/fabiodirauso/NetManCat/releases/tag/v1.0.0) | Marzo 2026 | ~70 MB | Single-file EXE · Runtime .NET 8 incluso · Firmato Authenticode |
+| [v1.0.0](https://github.com/Underdomotic/NetManCat/releases/tag/v1.0) | Marzo 2026 | ~70 MB | Single-file EXE · Runtime .NET 8 incluso · Firmato Authenticode |
 
 ---
 
