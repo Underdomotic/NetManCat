@@ -10,7 +10,7 @@
 [![Language](https://img.shields.io/badge/Language-C%23-239120?logo=csharp&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Release](https://img.shields.io/badge/Release-v1.0.0-orange)](https://github.com/fabiodirauso/NetManCat/releases)
-[![Blog](https://img.shields.io/badge/Blog-fabiodirauso.it-e65100?logo=rss&logoColor=white)](https://www.fabiodirauso.it/Informatica/Programmazione)
+[![Blog](https://img.shields.io/badge/Blog-fabiodirauso.it-e65100?logo=rss&logoColor=white)](https://www.fabiodirauso.it/Elettronica/misurare_la_latenza_di_rete_in_tempo_reale_con_icmpsendecho2_asincrono_in_&pnt&net&dp&_il_caso_di_netmancat.html)
 
 **NetManCat** mappa in tempo reale ogni connessione TCP del tuo PC, misura latenza, banda e packet loss per singola connessione, scopre i dispositivi della LAN e supporta NetFlow/sFlow/IPFIX.
 Distribuito come **singolo EXE firmato digitalmente** — nessuna installazione, nessuna dipendenza.
