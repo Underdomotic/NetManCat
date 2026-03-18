@@ -1,7 +1,7 @@
 <div align="center">
 
-<img src="config_screenshot.png" alt="NetManCat logo" width="377" />
-<img src="https://www.fabiodirauso.it/images/logo.png" alt="Fabiodirauso.it logo" width="377" />
+<img src="config_screenshot.png" alt="NetManCat logo" width="377" /></br>
+<img src="https://www.fabiodirauso.it/images/logo.png" alt="Fabiodirauso.it logo" width="377" /></br>
 # NetManCat
 ### Il monitor di rete real-time per Windows che ti dice la verità
 
