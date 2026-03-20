@@ -1,7 +1,7 @@
 <div align="center">
 
-<img src="config_screenshot.png" alt="NetManCat logo" width="377" /></br>
-<img src="https://www.fabiodirauso.it/images/logo.png" alt="Fabiodirauso.it logo" width="377" /></br>
+<img src="NetManCat/splash_logo.png" alt="NetManCat logo" width="180" />
+
 # NetManCat
 ### Il monitor di rete real-time per Windows che ti dice la verità
 
@@ -9,8 +9,8 @@
 [![.NET](https://img.shields.io/badge/.NET-8.0-512bd4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 [![Language](https://img.shields.io/badge/Language-C%23-239120?logo=csharp&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Release](https://img.shields.io/badge/Release-v1.0.0-orange)](https://github.com/fabiodirauso/NetManCat/releases)
-[![Blog](https://img.shields.io/badge/Blog-fabiodirauso.it-e65100?logo=rss&logoColor=white)](https://www.fabiodirauso.it/Elettronica/misurare_la_latenza_di_rete_in_tempo_reale_con_icmpsendecho2_asincrono_in_&pnt&net&dp&_il_caso_di_netmancat.html)
+[![Release](https://img.shields.io/badge/Release-v1.2.0-orange)](https://github.com/fabiodirauso/NetManCat/releases)
+[![Blog](https://img.shields.io/badge/Blog-fabiodirauso.it-e65100?logo=rss&logoColor=white)](https://www.fabiodirauso.it/Informatica/Programmazione)
 
 **NetManCat** mappa in tempo reale ogni connessione TCP del tuo PC, misura latenza, banda e packet loss per singola connessione, scopre i dispositivi della LAN e supporta NetFlow/sFlow/IPFIX.
 Distribuito come **singolo EXE firmato digitalmente** — nessuna installazione, nessuna dipendenza.
@@ -27,10 +27,12 @@ Distribuito come **singolo EXE firmato digitalmente** — nessuna installazione,
 - Enumera tutte le connessioni TCP attive tramite `GetExtendedTcpTable` con PID e nome processo
 - Griglia a gruppi **collassabili** — raggruppa per stato TCP o per processo
 - **Latenza RTT** per ogni IP remoto tramite `IcmpSendEcho2` (asincrono, non bloccante)
+- **TCP dual-probe** *(v1.1)* — affianca all'ICMP un probe TCP (`Socket.ConnectAsync` su porta configurabile, default 443) per misurare l'RTT anche dove ICMP è bloccato da firewall
 - **Banda per singola connessione** — KB/s upload + download letti dal kernel via `GetPerTcpConnectionEStats`
 - **Packet loss %** e jitter calcolati sui probe ICMP
 - Colori soglia: 🟢 < 50 ms · 🟡 50–150 ms · 🔴 > 150 ms
 - Click destro → aggiungi alla **Watchlist ★** per analisi approfondita
+- Click destro → voci **📊 Grafico** disponibili solo per connessioni già in Watchlist *(v1.2)*
 
 ### 📊 Analisi approfondita (tab Analisi)
 - Grafico temporale di latenza, banda e loss% per le connessioni in Watchlist
@@ -50,6 +52,26 @@ Distribuito come **singolo EXE firmato digitalmente** — nessuna installazione,
 - Il PC di controllo aggiunge server remoti (IP + porta) e li vede tutti in un'unica griglia aggregata
 - Riconnessione automatica con backoff esponenziale in caso di interruzione
 - Toggle start/stop senza riavvio dell'applicazione
+- **TLS 1.2 / 1.3** *(v1.1)* — cifratura `SslStream` su tutti i canali server/client; certificato PFX configurabile; thumbprint pinning con modalità TOFU (trust-on-first-use) per certificati self-signed
+
+### ⚠ Alerting automatico (tab Alert) *(v1.2)*
+- **AlertEngine** — confronta ad ogni scan le metriche della Watchlist (latenza, packet loss, jitter) con le soglie configurate
+- **Cooldown 60 s** per chiave — evita lo spam di notifiche per la stessa connessione
+- **Balloon tray** con titolo e corpo descrittivo; click sul balloon → tab Alert
+- **Badge `* ⚠`** sulla tab Alert se la finestra non è in primo piano
+- **AlertLogPanel** — griglia colorata (rosso=latenza, arancio=loss, giallo=jitter) con inserimento in testa, max 500 righe, export CSV
+- Reset cooldown automatico al cambio soglie in Configurazione
+
+### 🔭 ETW event-driven *(v1.2)*
+- **EtwNetworkMonitor** — cattura eventi TCP direttamente dal kernel tramite `Microsoft.Diagnostics.Tracing.TraceEvent`
+- Cattura connessioni brevi **< 500 ms** invisibili al polling `GetExtendedTcpTable`
+- Thread dedicato `IsBackground`, overhead CPU quasi zero a riposo
+- Richiede privilegi amministrativi; ignorato silenziosamente se insufficienti
+
+### 💾 Watchlist persistente *(v1.2)*
+- **WatchlistManager** salva su `netmancat_watchlist.json` ad ogni modifica
+- Ricaricata automaticamente all'avvio — la Watchlist sopravvive al riavvio
+- Percorso: stessa cartella del file SQLite configurato
 
 ### ⚙️ Configurazione & Log (tab Configurazione)
 - Soglie di alert configurabili: latenza (ms), packet loss (%), jitter (ms)
@@ -80,10 +102,11 @@ Distribuito come **singolo EXE firmato digitalmente** — nessuna installazione,
 ## 🚀 Quick start
 
 ```
-1. Scarica NetManCat.exe dalla sezione Releases
+1. Scarica NetManCat_v1.2.exe dalla sezione Releases
 2. Click destro → "Esegui come amministratore" (per tutte le metriche)
 3. Schermata di caricamento → tab Monitor già popolato
 4. Click destro su una riga → ★ Aggiungi ad Analisi per il monitoraggio approfondito
+5. Gli alert automatici appaiono nel tab ⚠ Alert con notifica tray
 ```
 
 > **Nota antivirus:** l'EXE è firmato digitalmente Authenticode (Fabiodirauso.it).
@@ -95,7 +118,9 @@ Distribuito come **singolo EXE firmato digitalmente** — nessuna installazione,
 
 | Versione | Data | Dimensione | Note |
 |----------|------|------------|------|
-| [v1.0.0](https://github.com/Underdomotic/NetManCat/releases/tag/v1.0) | Marzo 2026 | ~70 MB | Single-file EXE · Runtime .NET 8 incluso · Firmato Authenticode |
+| [v1.2.0](https://github.com/fabiodirauso/NetManCat/releases/tag/v1.2.0) | Marzo 2026 | ~70 MB | AlertEngine + ETW event-driven + Watchlist persistente · Bug fix context menu |
+| [v1.1.0](https://github.com/fabiodirauso/NetManCat/releases/tag/v1.1.0) | Marzo 2026 | ~70 MB | TCP dual-probe (ICMP+TCP) · TLS 1.2/1.3 server/client · Firmato Authenticode |
+| [v1.0.0](https://github.com/fabiodirauso/NetManCat/releases/tag/v1.0.0) | Marzo 2026 | ~70 MB | Single-file EXE · Runtime .NET 8 incluso · Firmato Authenticode |
 
 ---
 
@@ -118,7 +143,9 @@ NetManCat/
 │   ├── ScanService.cs             # Timer scan + distribuzione eventi
 │   ├── ConfigManager.cs           # Lettura/scrittura netmancat.json + eventi cambio config
 │   ├── NicManager.cs              # Enumerazione interfacce di rete
-│   └── WatchlistManager.cs        # Gestione connessioni in analisi approfondita
+│   ├── WatchlistManager.cs        # Gestione connessioni in analisi approfondita + persistenza JSON (v1.2)
+│   ├── AlertEngine.cs             # [v1.2] Alerting automatico: latenza/loss/jitter con cooldown 60s
+│   └── EtwNetworkMonitor.cs       # [v1.2] Cattura connessioni effimere < 500ms via ETW kernel
 │
 ├── UI/
 │   ├── MainForm.cs                # Finestra principale, status bar, tray icon
@@ -129,6 +156,8 @@ NetManCat/
 │       ├── AnalysisPanel.cs       # Tab Analisi: grafici + traceroute Watchlist
 │       ├── FlowAnalysisPanel.cs   # Tab Flusso: NetFlow/sFlow + discovery LAN
 │       ├── ServerPanel.cs         # Tab Server: gestione server TCP + griglia client
+│       ├── GraphPanel.cs          # Tab Grafico: GDI+ canvas storico, zoom, screenshot, CSV
+│       ├── AlertLogPanel.cs       # Tab Alert: log colorato eventi, export CSV (v1.2)
 │       └── ConfigPanel.cs         # Tab Configurazione: soglie, log, avvio automatico
 │
 └── Models/
@@ -152,9 +181,12 @@ NetManCat/
 | SNMP v1 BER/ASN.1 (implementazione manuale) | Fingerprinting dispositivi di rete |
 | UDP listener multi-protocollo | NetFlow v5, NetFlow v9, IPFIX, sFlow v5 |
 | `System.Net.Sockets` `TcpListener`/`TcpClient` | Comunicazione server/client |
+| `Socket.ConnectAsync` (TCP probe) *(v1.1)* | RTT reale su porta TCP anche senza ICMP |
+| `System.Net.Security.SslStream` *(v1.1)* | Cifratura TLS 1.2/1.3 su canali server/client, thumbprint pinning TOFU |
 | [K4os.Compression.LZ4](https://github.com/MiloszKrajewski/K4os.Compression.LZ4) | Compressione pacchetti TCP (velocità massima) |
 | [Microsoft.Data.Sqlite](https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/) | Persistenza metriche, nessun ORM |
 | `System.Text.Json` | Serializzazione payload e configurazione |
+| [Microsoft.Diagnostics.Tracing.TraceEvent](https://github.com/microsoft/perfview) *(v1.2)* | ETW kernel events — connessioni TCP effimere < 500ms |
 | Authenticode + signtool.exe | Firma digitale dell'EXE pubblicato |
 
 ---
@@ -207,5 +239,5 @@ Distribuito sotto licenza **MIT**. Vedi [`LICENSE`](LICENSE) per i dettagli.
 ---
 
 <div align="center">
-  <sub>NetManCat — Network Connection Monitor · © 2026 FabioDiRauso.it</sub>
+  <sub>NetManCat v1.2 — Network Connection Monitor · © 2026 FabioDiRauso.it</sub>
 </div>
