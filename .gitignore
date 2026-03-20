@@ -1,0 +1,21 @@
+# Build output
+bin/
+obj/
+
+# Config locale con dati macchina / credenziali
+netmancat.json
+netmancat_watchlist.json
+netmancat.db
+*_graph.db
+
+# Certificato PFX (non va mai in repo)
+*.pfx
+
+# Visual Studio / VS Code
+.vs/
+*.user
+*.suo
+.vscode/
+
+# Rider
+.idea/
