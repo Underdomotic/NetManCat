@@ -119,9 +119,9 @@ Distribuito come **singolo EXE firmato digitalmente** — nessuna installazione,
 
 | Versione | Data | Dimensione | Note |
 |----------|------|------------|------|
-| [v1.2](https://github.com/fabiodirauso/NetManCat/releases/tag/v1.2) | Marzo 2026 | ~70 MB | AlertEngine + ETW event-driven + Watchlist persistente · Bug fix context menu |
+| [v1.2](https://github.com/Underdomotic/NetManCat/releases/tag/v1.2) | Marzo 2026 | ~70 MB | AlertEngine + ETW event-driven + Watchlist persistente · Bug fix context menu |
 | [v1.1](https://github.com/Underdomotic/NetManCat/releases/tag/v1.1) | Marzo 2026 | ~70 MB | TCP dual-probe (ICMP+TCP) · TLS 1.2/1.3 server/client · Firmato Authenticode |
-| [v1.0](https://github.com/fabiodirauso/NetManCat/releases/tag/v1.0) | Marzo 2026 | ~70 MB | Single-file EXE · Runtime .NET 8 incluso · Firmato Authenticode |
+| [v1.0](https://github.com/Underdomotic/NetManCat/releases/tag/v1.0) | Marzo 2026 | ~70 MB | Single-file EXE · Runtime .NET 8 incluso · Firmato Authenticode |
 
 ---
 
